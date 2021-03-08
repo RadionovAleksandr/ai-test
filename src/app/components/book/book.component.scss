@@ -1,0 +1,35 @@
+.form {
+  max-width: 800px;
+  margin: 0 auto;
+
+  &__reviews {
+    display: flex;
+    max-width: 800px;
+    margin: 0 auto;
+
+    &__item {
+      margin: 0 auto;
+    }
+    &__control {
+      margin: 0 auto;
+    }
+    &__input {
+      margin-left: 33px;
+    }
+  }
+}
+
+button {
+  margin-left: 8px;
+}
+
+.rate-wrap {
+  width: 480px;
+  margin: 0 auto;
+}
+
+.upload-wrap {
+  display: flex;
+  width: 570px;
+  margin: 0 auto;
+}

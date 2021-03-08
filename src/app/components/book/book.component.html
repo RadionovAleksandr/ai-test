@@ -1,0 +1,124 @@
+<div class="rate-wrap">
+  <nz-form-label [nzSpan]="7" nzRequired>Рейтинг</nz-form-label>
+  <nz-rate [disabled]="isDisabled()" nzAllowHalf [ngModel]="rate" (ngModelChange)="changeRate($event)"></nz-rate>
+</div>
+<div class="upload-wrap">
+  <nz-form-label [nzSpan]="5">Обложка</nz-form-label>
+  <app-upload [disabled]="isDisabled()" [imageMetaData]="image" (changeImage)="changeImage($event)"></app-upload>
+</div>
+
+<form class="form" nz-form [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Название</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="title"/>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста введите название
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Описание</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <textarea formControlName="description" nz-input rows="2"></textarea>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста опишите о чем эта книга
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Автор</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="author"/>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста введите автора/ов
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Издательство</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <input formControlName="publisher" nz-input/>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста введите издательство
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>ISBN</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="ISBN"/>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста введите номер ISBN
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Год издания</nz-form-label>
+    <nz-form-control [nzSpan]="12" type="number" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="year"/>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста введите год издания
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Количество страниц</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="countPages"/>
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Пожалуйста введите количество страниц
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="form__reviews">
+    <nz-form-label [nzSpan]="7">Отзывы тех кто прочитал</nz-form-label>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <button [disabled]="isDisabled()" nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+          <i nz-icon nzType="plus"></i>
+          Добавить отзыв
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div formGroupName="reviews">
+    <nz-form-item *ngFor="let control of reviewControls; let i = index">
+      <nz-form-control class="reviews__control" [nzSpan]="12" nzHasFeedback>
+        <textarea class="reviews__input" nz-input rows="2" [formControlName]="i"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">Личные заметки по книге</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <textarea nz-input formControlName="personalNotes" rows="2"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" [disabled]="!form.valid">{{buttonTitle}}</button>
+      <button *ngIf="!isCreateMode()" nz-button (click)="enableForm($event)">Редактировать</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
